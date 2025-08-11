@@ -77,25 +77,26 @@
 }
 
 .dark {
-  --background: oklch(0.15 0 0); /* Fundo principal bem escuro */
-  --foreground: oklch(0.98 0 0); /* Texto principal branco quase puro */
+  --background: oklch(0.15 0 0);       /* Fundo principal */
+  --foreground: oklch(0.98 0 0);       /* Texto principal */
 
-  --card: oklch(0.20 0 0); 
+  --card: oklch(0.20 0 0);
   --card-foreground: oklch(0.98 0 0);
 
   --popover: oklch(0.20 0 0);
   --popover-foreground: oklch(0.98 0 0);
 
-  --primary: oklch(0.95 0 0); /* Usado em botões primários claros */
-  --primary-foreground: oklch(0.20 0 0);
+  /* PRIMÁRIO ESCURO para o footer e áreas “cheias” no dark */
+  --primary: oklch(0.20 0 0);
+  --primary-foreground: oklch(0.98 0 0);
 
-  --secondary: oklch(0.28 0 0); /* Cinza escuro para áreas secundárias */
+  --secondary: oklch(0.28 0 0);
   --secondary-foreground: oklch(0.95 0 0);
 
-  --muted: oklch(0.24 0 0); /* Fundo de seções alternadas */
+  --muted: oklch(0.24 0 0);
   --muted-foreground: oklch(0.80 0 0);
 
-  /* Laranja da marca - forte e vibrante */
+  /* Laranja da marca em destaque */
   --accent: oklch(0.75 0.21 41.116);
   --accent-foreground: oklch(0.15 0 0);
 
@@ -105,7 +106,7 @@
   --input: oklch(0.35 0 0 / 70%);
   --ring: var(--accent);
 
-  /* Cores de gráfico ajustadas para visibilidade no dark */
+  /* Gráficos no dark */
   --chart-1: var(--accent);
   --chart-2: oklch(0.70 0.17 162.48);
   --chart-3: oklch(0.77 0.19 70.08);
