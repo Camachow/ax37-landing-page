@@ -355,7 +355,7 @@ function App() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="depoimentos" className="py-16 bg-background">
+      {/* <section id="depoimentos" className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center space-y-4 mb-16">
             <Badge className="bg-accent/10 text-accent border-accent/20">Depoimentos</Badge>
@@ -433,7 +433,7 @@ function App() {
             </Card>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact Section */}
       <section id="contato" className="py-16 bg-muted/30">
