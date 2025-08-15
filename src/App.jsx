@@ -28,6 +28,8 @@ import {
   Monitor,
   Package,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import heroImage from "./assets/hero-exposition.jpg";
 import standCorporativo from "./assets/stand-corporativo.jpg";
@@ -36,6 +38,369 @@ import exposicaoCultural from "./assets/exposicao-cultural.jpg";
 import ax37Logo from "./assets/ax37-logo.png";
 import "./App.css";
 import ThemeToggle from "./components/ui/theme-toggle";
+
+function EventCard({ image, badge, title, description, alt }) {
+  return (
+    <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+      <div className="aspect-video relative overflow-hidden">
+        <img
+          src={image}
+          alt={alt}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300" />
+        <div className="absolute bottom-4 left-4 right-4">
+          <Badge className="bg-white/90 text-gray-800">{badge}</Badge>
+        </div>
+      </div>
+      <CardContent className="p-6">
+        <h3 className="text-lg font-semibold mb-2">{title}</h3>
+        <p className="text-gray-600 text-sm">{description}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function ServiceCard({ Icon, title, description, bullets }) {
+  return (
+    <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-accent/50">
+      <CardHeader className="text-center pb-4">
+        <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors border border-accent/20">
+          <Icon className="w-8 h-8 text-accent" />
+        </div>
+        <CardTitle className="text-xl text-foreground">{title}</CardTitle>
+      </CardHeader>
+      <CardContent className="text-center">
+        <CardDescription className="text-base text-muted-foreground">
+          {description}
+        </CardDescription>
+        <div className="mt-4 space-y-2">
+          {bullets?.map((b, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-center text-sm text-muted-foreground"
+            >
+              <CheckCircle className="w-4 h-4 mr-2 text-accent" />
+              {b}
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+const events = [
+  {
+    image: standCorporativo,
+    alt: "Stand Inovador Tech Corp",
+    badge: "Stand Corporativo",
+    title: "Stand Inovador Tech Corp",
+    description:
+      "Stand corporativo de 200m² com tecnologia interativa, iluminação LED e design moderno para feira de tecnologia.",
+  },
+  {
+    image: feiraTecnologica,
+    alt: "Feira de Tecnologia 2024",
+    badge: "Feira Tecnológica",
+    title: "Feira de Tecnologia 2024",
+    description:
+      "Montagem completa de pavilhão para feira tecnológica com 50 expositores e infraestrutura completa.",
+  },
+  {
+    image: exposicaoCultural,
+    alt: "Exposição Arte Moderna",
+    badge: "Exposição Cultural",
+    title: "Exposição Arte Moderna",
+    description:
+      "Cenografia especial para exposição cultural com iluminação cênica e elementos interativos únicos.",
+  },
+  {
+    image: standCorporativo,
+    alt: "Stand Empresarial Premium",
+    badge: "Stand Corporativo",
+    title: "Stand Empresarial Premium",
+    description:
+      "Design exclusivo com materiais premium, área de reunião e apresentação multimídia integrada.",
+  },
+  {
+    image: feiraTecnologica,
+    alt: "Pavilhão Inovação",
+    badge: "Feira Tecnológica",
+    title: "Pavilhão Inovação",
+    description:
+      "Espaço completo para demonstrações tecnológicas com infraestrutura audiovisual de última geração.",
+  },
+  {
+    image: exposicaoCultural,
+    alt: "Galeria Contemporânea",
+    badge: "Exposição Cultural",
+    title: "Galeria Contemporânea",
+    description:
+      "Ambiente museológico com iluminação especializada e sistemas de segurança para obras de arte.",
+  },
+  {
+    image: standCorporativo,
+    alt: "Stand Inovador Tech Corp",
+    badge: "Stand Corporativo",
+    title: "Stand Inovador Tech Corp",
+    description:
+      "Stand corporativo de 200m² com tecnologia interativa, iluminação LED e design moderno para feira de tecnologia.",
+  },
+  {
+    image: feiraTecnologica,
+    alt: "Feira de Tecnologia 2024",
+    badge: "Feira Tecnológica",
+    title: "Feira de Tecnologia 2024",
+    description:
+      "Montagem completa de pavilhão para feira tecnológica com 50 expositores e infraestrutura completa.",
+  },
+  {
+    image: exposicaoCultural,
+    alt: "Exposição Arte Moderna",
+    badge: "Exposição Cultural",
+    title: "Exposição Arte Moderna",
+    description:
+      "Cenografia especial para exposição cultural com iluminação cênica e elementos interativos únicos.",
+  },
+  {
+    image: standCorporativo,
+    alt: "Stand Empresarial Premium",
+    badge: "Stand Corporativo",
+    title: "Stand Empresarial Premium",
+    description:
+      "Design exclusivo com materiais premium, área de reunião e apresentação multimídia integrada.",
+  },
+  {
+    image: feiraTecnologica,
+    alt: "Pavilhão Inovação",
+    badge: "Feira Tecnológica",
+    title: "Pavilhão Inovação",
+    description:
+      "Espaço completo para demonstrações tecnológicas com infraestrutura audiovisual de última geração.",
+  },
+  {
+    image: exposicaoCultural,
+    alt: "Galeria Contemporânea",
+    badge: "Exposição Cultural",
+    title: "Galeria Contemporânea",
+    description:
+      "Ambiente museológico com iluminação especializada e sistemas de segurança para obras de arte.",
+  },
+];
+
+const services = [
+  {
+    Icon: Building2,
+    title: "Stands Personalizados",
+    description:
+      "Criação e montagem de stands únicos e personalizados, com design exclusivo que reflete a identidade da sua marca e maximiza o engajamento.",
+    bullets: ["Design exclusivo", "Materiais premium", "Montagem profissional"],
+  },
+  {
+    Icon: Users,
+    title: "Estratégia de Marketing",
+    description:
+      "Desenvolvimento de estratégias de marketing integradas para maximizar o ROI dos seus eventos e criar conexões duradouras com o público.",
+    bullets: [
+      "Análise de público-alvo",
+      "Campanhas integradas",
+      "Métricas e resultados",
+    ],
+  },
+  {
+    Icon: Monitor,
+    title: "Tecnologia Audiovisual",
+    description:
+      "Equipamentos de última geração para apresentações, vídeos e interações digitais que elevam a experiência do seu evento.",
+    bullets: [
+      "Telas de alta resolução",
+      "Som profissional",
+      "Interatividade digital",
+    ],
+  },
+  {
+    Icon: Lightbulb,
+    title: "Experiências Imersivas",
+    description:
+      "Criação de experiências imersivas e envolventes que conectam emocionalmente sua marca com o público participante.",
+    bullets: [
+      "Design de experiência",
+      "Elementos interativos",
+      "Engajamento emocional",
+    ],
+  },
+  {
+    Icon: Settings,
+    title: "Gestão Completa",
+    description:
+      "Gestão completa do seu evento, desde o planejamento inicial até a execução final, garantindo que tudo saia perfeito.",
+    bullets: ["Planejamento estratégico", "Coordenação total", "Suporte 24/7"],
+  },
+  {
+    Icon: Award,
+    title: "Branding e Identidade",
+    description:
+      "Desenvolvimento e aplicação consistente da identidade visual da sua marca em todos os pontos de contato do evento.",
+    bullets: [
+      "Identidade visual",
+      "Materiais gráficos",
+      "Consistência de marca",
+    ],
+  },
+  {
+    Icon: Building2,
+    title: "Stands Personalizados",
+    description:
+      "Criação e montagem de stands únicos e personalizados, com design exclusivo que reflete a identidade da sua marca e maximiza o engajamento.",
+    bullets: ["Design exclusivo", "Materiais premium", "Montagem profissional"],
+  },
+  {
+    Icon: Users,
+    title: "Estratégia de Marketing",
+    description:
+      "Desenvolvimento de estratégias de marketing integradas para maximizar o ROI dos seus eventos e criar conexões duradouras com o público.",
+    bullets: [
+      "Análise de público-alvo",
+      "Campanhas integradas",
+      "Métricas e resultados",
+    ],
+  },
+  {
+    Icon: Monitor,
+    title: "Tecnologia Audiovisual",
+    description:
+      "Equipamentos de última geração para apresentações, vídeos e interações digitais que elevam a experiência do seu evento.",
+    bullets: [
+      "Telas de alta resolução",
+      "Som profissional",
+      "Interatividade digital",
+    ],
+  },
+  {
+    Icon: Lightbulb,
+    title: "Experiências Imersivas",
+    description:
+      "Criação de experiências imersivas e envolventes que conectam emocionalmente sua marca com o público participante.",
+    bullets: [
+      "Design de experiência",
+      "Elementos interativos",
+      "Engajamento emocional",
+    ],
+  },
+  {
+    Icon: Settings,
+    title: "Gestão Completa",
+    description:
+      "Gestão completa do seu evento, desde o planejamento inicial até a execução final, garantindo que tudo saia perfeito.",
+    bullets: ["Planejamento estratégico", "Coordenação total", "Suporte 24/7"],
+  },
+  {
+    Icon: Award,
+    title: "Branding e Identidade",
+    description:
+      "Desenvolvimento e aplicação consistente da identidade visual da sua marca em todos os pontos de contato do evento.",
+    bullets: [
+      "Identidade visual",
+      "Materiais gráficos",
+      "Consistência de marca",
+    ],
+  },
+];
+
+function chunkArray(arr, size) {
+  const chunks = [];
+  for (let i = 0; i < arr.length; i += size)
+    chunks.push(arr.slice(i, i + size));
+  return chunks;
+}
+
+function GridCarousel({ items, renderItem }) {
+  const slides = chunkArray(items, 6);
+  const [index, setIndex] = React.useState(0);
+
+  const goTo = (i) => setIndex((i + slides.length) % slides.length);
+  const next = () => goTo(index + 1);
+  const prev = () => goTo(index - 1);
+
+  React.useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [index, slides.length]);
+
+  return (
+    <div className="relative">
+      {/* wrapper relativo da faixa de cards */}
+      <div className="relative">
+        {/* viewport: esconda só no eixo X; deixe Y visível p/ sombra não cortar */}
+        <div className="overflow-x-hidden overflow-y-visible -mx-2 sm:-mx-4">
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${index * 100}%)` }}
+          >
+            {slides.map((slide, sIdx) => (
+              // cada slide recebe um gutter interno para evitar corte do lado direito
+              <div key={sIdx} className="w-full shrink-0 px-2 sm:px-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {slide.map((item, i) => (
+                    <React.Fragment key={i}>
+                      {renderItem(item, i)}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* setas centralizadas e um pouco para fora */}
+        {slides.length > 1 && (
+          <>
+            <button
+              onClick={prev}
+              aria-label="Anterior"
+              className="absolute top-1/2 -translate-y-1/2 -left-12 md:-left-14 lg:-left-16
+                       bg-background/80 backdrop-blur border border-border hover:border-accent/50
+                       rounded-full p-2 shadow-md z-10 hidden sm:flex"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            <button
+              onClick={next}
+              aria-label="Próximo"
+              className="absolute top-1/2 -translate-y-1/2 -right-12 md:-right-14 lg:-right-16
+                       bg-background/80 backdrop-blur border border-border hover:border-accent/50
+                       rounded-full p-2 shadow-md z-10 hidden sm:flex"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* dots fora do wrapper para não afetar o centramento vertical das setas */}
+      {slides.length > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-6">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Ir para slide ${i + 1}`}
+              className={`h-2.5 rounded-full transition-all ${
+                i === index ? "w-6 bg-accent" : "w-2.5 bg-muted"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function App() {
   return (
@@ -193,195 +558,10 @@ function App() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-accent/50">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors border border-accent/20">
-                  <Building2 className="w-8 h-8 text-accent" />
-                </div>
-                <CardTitle className="text-xl text-foreground">
-                  Stands Personalizados
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <CardDescription className="text-base text-muted-foreground">
-                  Criação e montagem de stands únicos e personalizados, com
-                  design exclusivo que reflete a identidade da sua marca e
-                  maximiza o engajamento.
-                </CardDescription>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Design exclusivo
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Materiais premium
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Montagem profissional
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-accent/50">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors border border-accent/20">
-                  <Users className="w-8 h-8 text-accent" />
-                </div>
-                <CardTitle className="text-xl text-foreground">
-                  Estratégia de Marketing
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <CardDescription className="text-base text-muted-foreground">
-                  Desenvolvimento de estratégias de marketing integradas para
-                  maximizar o ROI dos seus eventos e criar conexões duradouras
-                  com o público.
-                </CardDescription>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Análise de público-alvo
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Campanhas integradas
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Métricas e resultados
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-accent/50">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors border border-accent/20">
-                  <Monitor className="w-8 h-8 text-accent" />
-                </div>
-                <CardTitle className="text-xl text-foreground">
-                  Tecnologia Audiovisual
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <CardDescription className="text-base text-muted-foreground">
-                  Equipamentos de última geração para apresentações, vídeos e
-                  interações digitais que elevam a experiência do seu evento.
-                </CardDescription>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Telas de alta resolução
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Som profissional
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Interatividade digital
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-accent/50">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors border border-accent/20">
-                  <Lightbulb className="w-8 h-8 text-accent" />
-                </div>
-                <CardTitle className="text-xl text-foreground">
-                  Experiências Imersivas
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <CardDescription className="text-base text-muted-foreground">
-                  Criação de experiências imersivas e envolventes que conectam
-                  emocionalmente sua marca com o público participante.
-                </CardDescription>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Design de experiência
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Elementos interativos
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Engajamento emocional
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-accent/50">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors border border-accent/20">
-                  <Settings className="w-8 h-8 text-accent" />
-                </div>
-                <CardTitle className="text-xl text-foreground">
-                  Gestão Completa
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <CardDescription className="text-base text-muted-foreground">
-                  Gestão completa do seu evento, desde o planejamento inicial
-                  até a execução final, garantindo que tudo saia perfeito.
-                </CardDescription>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Planejamento estratégico
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Coordenação total
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Suporte 24/7
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-accent/50">
-              <CardHeader className="text-center pb-4">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors border border-accent/20">
-                  <Award className="w-8 h-8 text-accent" />
-                </div>
-                <CardTitle className="text-xl text-foreground">
-                  Branding e Identidade
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <CardDescription className="text-base text-muted-foreground">
-                  Desenvolvimento e aplicação consistente da identidade visual
-                  da sua marca em todos os pontos de contato do evento.
-                </CardDescription>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Identidade visual
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Materiais gráficos
-                  </div>
-                  <div className="flex items-center justify-center text-sm text-muted-foreground">
-                    <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-                    Consistência de marca
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+          <GridCarousel
+            items={services}
+            renderItem={(svc) => <ServiceCard {...svc} />}
+          />
         </div>
       </section>
 
@@ -402,157 +582,10 @@ function App() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-video relative overflow-hidden">
-                <img
-                  src={standCorporativo}
-                  alt="Stand Inovador Tech Corp"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <Badge className="bg-white/90 text-gray-800">
-                    Stand Corporativo
-                  </Badge>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-2">
-                  Stand Inovador Tech Corp
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Stand corporativo de 200m² com tecnologia interativa,
-                  iluminação LED e design moderno para feira de tecnologia.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-video relative overflow-hidden">
-                <img
-                  src={feiraTecnologica}
-                  alt="Feira de Tecnologia 2024"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <Badge className="bg-white/90 text-gray-800">
-                    Feira Tecnológica
-                  </Badge>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-2">
-                  Feira de Tecnologia 2024
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Montagem completa de pavilhão para feira tecnológica com 50
-                  expositores e infraestrutura completa.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-video relative overflow-hidden">
-                <img
-                  src={exposicaoCultural}
-                  alt="Exposição Arte Moderna"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <Badge className="bg-white/90 text-gray-800">
-                    Exposição Cultural
-                  </Badge>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-2">
-                  Exposição Arte Moderna
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Cenografia especial para exposição cultural com iluminação
-                  cênica e elementos interativos únicos.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-video relative overflow-hidden">
-                <img
-                  src={standCorporativo}
-                  alt="Stand Empresarial Premium"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <Badge className="bg-white/90 text-gray-800">
-                    Stand Corporativo
-                  </Badge>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-2">
-                  Stand Empresarial Premium
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Design exclusivo com materiais premium, área de reunião e
-                  apresentação multimídia integrada.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-video relative overflow-hidden">
-                <img
-                  src={feiraTecnologica}
-                  alt="Pavilhão Inovação"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <Badge className="bg-white/90 text-gray-800">
-                    Feira Tecnológica
-                  </Badge>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-2">
-                  Pavilhão Inovação
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Espaço completo para demonstrações tecnológicas com
-                  infraestrutura audiovisual de última geração.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="aspect-video relative overflow-hidden">
-                <img
-                  src={exposicaoCultural}
-                  alt="Galeria Contemporânea"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <Badge className="bg-white/90 text-gray-800">
-                    Exposição Cultural
-                  </Badge>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-2">
-                  Galeria Contemporânea
-                </h3>
-                <p className="text-gray-600 text-sm">
-                  Ambiente museológico com iluminação especializada e sistemas
-                  de segurança para obras de arte.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
+          <GridCarousel
+            items={events}
+            renderItem={(ev) => <EventCard {...ev} />}
+          />
 
           <div className="text-center mt-12">
             <Button
@@ -659,8 +692,9 @@ function App() {
               Vamos Criar Seu Próximo Evento
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Estamos prontos para transformar sua visão em realidade. Entre em
-              contato conosco e vamos começar a planejar seu evento perfeito.
+              Oferecemos o que você precisa para um evento de sucesso. <br />
+              <strong>Fale conosco</strong>, vamos te ajudar a alcançar seus
+              objetivos.
             </p>
           </div>
 
@@ -671,8 +705,7 @@ function App() {
                   Solicite seu Orçamento
                 </CardTitle>
                 <CardDescription className="text-muted-foreground">
-                  Preencha o formulário abaixo e entraremos em contato em até 24
-                  horas.
+                  Preencha o formulário abaixo e entraremos em contato em breve.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -749,8 +782,8 @@ function App() {
                       <h3 className="font-semibold text-lg text-foreground">
                         Telefone
                       </h3>
-                      <p className="text-muted-foreground">(11) 9999-9999</p>
-                      <p className="text-muted-foreground">(11) 3333-3333</p>
+                      <p className="text-muted-foreground">(31) 9369-0883</p>
+                      <p className="text-muted-foreground">(31) 9617-5573</p>
                     </div>
                   </div>
                 </CardContent>
@@ -893,9 +926,9 @@ function App() {
             <div>
               <h4 className="font-semibold text-lg mb-4">Contato</h4>
               <ul className="space-y-2 text-primary-foreground/80">
-                <li>(11) 9999-9999</li>
+                <li>(31) 9369-0883</li>
                 <li>contato@ax37marketing.com</li>
-                <li>São Paulo - SP</li>
+                <li>Belo Horizonte - MG</li>
               </ul>
             </div>
           </div>
