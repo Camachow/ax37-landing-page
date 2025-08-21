@@ -108,26 +108,48 @@ function SocialLinks({ size = "md", className = "", useBrandColor = false }) {
   );
 }
 
-function EventCard({ image, badge, title, description, alt }) {
+function EventCard({ image, badge, title, description, alt, compact = false }) {
+  const mediaAspect = compact ? "aspect-[21/9]" : "aspect-video";
+
   return (
     <Card
       className="group relative rounded-2xl shadow-lg hover:shadow-2xl
                  transition-all duration-300 hover:-translate-y-0.5 hover:z-10 transform-gpu"
     >
-      <div className="aspect-video relative overflow-hidden rounded-t-2xl">
+      <div className={`${mediaAspect} relative overflow-hidden rounded-t-2xl`}>
         <img
           src={image}
           alt={alt}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300" />
-        <div className="absolute bottom-4 left-4 right-4">
-          <Badge className="bg-white/90 text-gray-800">{badge}</Badge>
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/35 transition-all duration-300" />
+        <div className="absolute bottom-3 left-3 right-3">
+          <Badge className="bg-white/90 text-gray-800 text-xs px-2 py-0.5">
+            {badge}
+          </Badge>
         </div>
       </div>
-      <CardContent className="p-6">
-        <h3 className="text-lg font-semibold mb-2">{title}</h3>
-        <p className="text-gray-600 text-sm">{description}</p>
+      <CardContent className={compact ? "p-4" : "p-6"}>
+        <h3
+          className={
+            compact
+              ? "text-base font-semibold mb-1"
+              : "text-lg font-semibold mb-2"
+          }
+        >
+          {title}
+        </h3>
+        <p
+          className="text-muted-foreground text-sm"
+          style={{
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {description}
+        </p>
       </CardContent>
     </Card>
   );
@@ -241,8 +263,10 @@ function SimpleItemCard({
   caption,
   bullets,
   details,
+  compact = false,
 }) {
   const hasImage = Boolean(image);
+  const mediaAspect = compact && hasImage ? "aspect-[21/9]" : "aspect-video";
 
   return (
     <Card
@@ -250,9 +274,10 @@ function SimpleItemCard({
              shadow-sm hover:shadow-xl hover:border-accent/50
              transition-all duration-300 hover:-translate-y-0.5 hover:z-10 transform-gpu bg-card"
     >
-      {/* Renderiza mídia SOMENTE quando houver imagem */}
       {hasImage && (
-        <div className="relative aspect-video overflow-hidden rounded-t-2xl">
+        <div
+          className={`relative ${mediaAspect} overflow-hidden rounded-t-2xl`}
+        >
           <img
             src={image}
             alt={alt || title}
@@ -262,8 +287,8 @@ function SimpleItemCard({
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent opacity-90" />
           {badge && (
-            <div className="absolute left-4 bottom-4">
-              <Badge className="bg-white/90 text-gray-800 shadow-sm">
+            <div className="absolute left-3 bottom-3">
+              <Badge className="bg-white/90 text-gray-800 shadow-sm text-xs px-2 py-0.5">
                 {badge}
               </Badge>
             </div>
@@ -271,21 +296,25 @@ function SimpleItemCard({
         </div>
       )}
 
-      <CardContent className={`p-6 ${hasImage ? "" : "pt-6"}`}>
-        {/* Ícone (sem imagem: fica no topo; com imagem: sobrepõe levemente) */}
+      <CardContent
+        className={compact ? "p-4" : `p-6 ${hasImage ? "" : "pt-6"}`}
+      >
         {Icon ? (
           <div
-            className={`w-12 h-12 ${
-              hasImage ? "-mt-10 mb-3" : "mb-3"
-            } rounded-full
-                        bg-background/90 backdrop-blur border border-border/70 shadow-sm
-                        flex items-center justify-center`}
+            className={`${compact ? "w-10 h-10" : "w-12 h-12"} ${
+              hasImage ? (compact ? "-mt-8" : "-mt-10") : ""
+            }
+              mb-3 rounded-full bg-background/90 backdrop-blur border border-border/70 shadow-sm
+              flex items-center justify-center`}
           >
-            <Icon className="w-6 h-6 text-accent" />
+            <Icon
+              className={
+                compact ? "w-5 h-5 text-accent" : "w-6 h-6 text-accent"
+              }
+            />
           </div>
         ) : null}
 
-        {/* Badge opcional quando NÃO há imagem */}
         {!hasImage && badge ? (
           <div className="mb-2">
             <Badge className="bg-accent/10 text-accent border border-accent/20">
@@ -294,17 +323,33 @@ function SimpleItemCard({
           </div>
         ) : null}
 
-        {/* Título + caption */}
-        <h3 className="text-lg font-semibold text-foreground">{title}</h3>
+        <h3
+          className={
+            compact
+              ? "text-base font-semibold text-foreground"
+              : "text-lg font-semibold text-foreground"
+          }
+        >
+          {title}
+        </h3>
         {caption && (
-          <p className="mt-1 text-sm text-muted-foreground">{caption}</p>
+          <p
+            className="mt-1 text-sm text-muted-foreground"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: compact ? 2 : 3,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+            }}
+          >
+            {caption}
+          </p>
         )}
 
         {(bullets?.length || details) && (
-          <div className="mt-4 mb-3 h-px bg-border/60" />
+          <div className="mt-3 mb-2 h-px bg-border/60" />
         )}
 
-        {/* Bullets */}
         {bullets?.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {bullets.map((b, i) => (
@@ -313,19 +358,24 @@ function SimpleItemCard({
                 className="flex items-start text-sm text-muted-foreground"
               >
                 <CheckCircle className="w-4 h-4 mr-2 mt-0.5 text-accent shrink-0" />
-                <span>{b}</span>
+                <span
+                  style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: compact ? 1 : 2,
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                  }}
+                >
+                  {b}
+                </span>
               </div>
             ))}
           </div>
         ) : null}
 
-        {/* “Saiba mais” */}
         {details ? (
-          <details className="group/acc mt-4 rounded-lg border border-border bg-muted/40">
-            <summary
-              className="flex items-center justify-between cursor-pointer select-none
-                         px-3 py-2 text-sm text-accent hover:underline"
-            >
+          <details className="group/acc mt-3 rounded-lg border border-border bg-muted/40">
+            <summary className="flex items-center justify-between cursor-pointer select-none px-3 py-2 text-sm text-accent hover:underline">
               <span>Saiba mais</span>
               <ChevronDown
                 className="w-4 h-4 transition-transform duration-300 group-open/acc:rotate-180"
@@ -530,7 +580,7 @@ function GridCarousel({ items, renderItem }) {
             {slides.map((slide, sIdx) => (
               // cada slide recebe um gutter interno para evitar corte do lado direito
               <div key={sIdx} className="w-full shrink-0 px-2 sm:px-4">
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                   {slide.map((item, i) => (
                     <React.Fragment key={i}>
                       {renderItem(item, i)}
@@ -588,6 +638,68 @@ function GridCarousel({ items, renderItem }) {
 }
 
 function App() {
+  const [form, setForm] = React.useState({
+    name: "",
+    email: "",
+    phone: "",
+    type: "",
+    message: "",
+    botField: "", // honeypot anti-spam
+  });
+  const [loading, setLoading] = React.useState(false);
+  const [sent, setSent] = React.useState(null); // 'success' | 'error' | null
+
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+  };
+
+  const API_BASE = import.meta.env.DEV ? "http://localhost:3000" : "";
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSent(null);
+
+    // timeout de 20s para evitar "pendurado"
+    const controller = new AbortController();
+    const to = setTimeout(() => controller.abort(), 20000);
+
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+        signal: controller.signal,
+      });
+
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {} // se voltar HTML, evita quebrar
+
+      if (!res.ok || !data?.ok) {
+        throw new Error(data?.error || `HTTP ${res.status}`);
+      }
+
+      setSent("success");
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        type: "",
+        message: "",
+        botField: "",
+      });
+    } catch (err) {
+      console.error("CONTACT FORM ERROR:", err);
+      setSent("error");
+    } finally {
+      clearTimeout(to);
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header/Navigation */}
@@ -794,7 +906,7 @@ function App() {
 
           <GridCarousel
             items={productCatalog}
-            renderItem={(it) => <SimpleItemCard {...it} />}
+            renderItem={(it) => <SimpleItemCard {...it} compact />}
           />
         </div>
       </section>
@@ -899,7 +1011,7 @@ function App() {
 
           <GridCarousel
             items={events}
-            renderItem={(ev) => <EventCard {...ev} />}
+            renderItem={(ev) => <EventCard {...ev} compact />}
           />
 
           {/* <div className="text-center mt-12">
@@ -943,63 +1055,139 @@ function App() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
+                {/* Honeypot (anti-spam) */}
+                <input
+                  type="text"
+                  name="botField"
+                  value={form.botField}
+                  onChange={onChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
+
+                <form onSubmit={onSubmit} noValidate className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="text-sm font-medium text-foreground mb-2 block"
+                      >
+                        Nome Completo
+                      </label>
+                      <Input
+                        id="name"
+                        name="name"
+                        placeholder="Seu nome completo"
+                        className="border-border focus:border-accent"
+                        value={form.name}
+                        onChange={onChange}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="text-sm font-medium text-foreground mb-2 block"
+                      >
+                        Email
+                      </label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="seu@email.com"
+                        className="border-border focus:border-accent"
+                        value={form.email}
+                        onChange={onChange}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <label
+                        htmlFor="phone"
+                        className="text-sm font-medium text-foreground mb-2 block"
+                      >
+                        Telefone
+                      </label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        placeholder="(11) 99999-9999"
+                        className="border-border focus:border-accent"
+                        value={form.phone}
+                        onChange={onChange}
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="type"
+                        className="text-sm font-medium text-foreground mb-2 block"
+                      >
+                        Tipo de Evento
+                      </label>
+                      <select
+                        id="type"
+                        name="type"
+                        className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent bg-background text-foreground"
+                        value={form.type}
+                        onChange={onChange}
+                        required
+                      >
+                        <option value="">Selecione o tipo</option>
+                        {serviceTypes.map((s) => (
+                          <option key={s.title} value={s.title}>
+                            {s.title}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
                   <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Nome Completo
+                    <label
+                      htmlFor="message"
+                      className="text-sm font-medium text-foreground mb-2 block"
+                    >
+                      Mensagem
                     </label>
-                    <Input
-                      placeholder="Seu nome completo"
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Conte-nos mais sobre seu projeto..."
+                      rows={4}
                       className="border-border focus:border-accent"
+                      value={form.message}
+                      onChange={onChange}
+                      required
                     />
                   </div>
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Email
-                    </label>
-                    <Input
-                      type="email"
-                      placeholder="seu@email.com"
-                      className="border-border focus:border-accent"
-                    />
-                  </div>
-                </div>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Telefone
-                    </label>
-                    <Input
-                      placeholder="(11) 99999-9999"
-                      className="border-border focus:border-accent"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-sm font-medium text-foreground mb-2 block">
-                      Tipo de Evento
-                    </label>
-                    <select className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-accent bg-background text-foreground">
-                      <option>Selecione o tipo</option>
-                      {serviceTypes.map((s) => (
-                        <option key={s.title}>{s.title}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">
-                    Mensagem
-                  </label>
-                  <Textarea
-                    placeholder="Conte-nos mais sobre seu projeto..."
-                    rows={4}
-                    className="border-border focus:border-accent"
-                  />
-                </div>
-                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
-                  <Mail className="w-5 h-5 mr-2" />
-                  Enviar Solicitação
-                </Button>
+
+                  <Button
+                    type="submit"
+                    className="w-full bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+                    disabled={loading}
+                  >
+                    <Mail className="w-5 h-5 mr-2" />
+                    {loading ? "Enviando..." : "Enviar Solicitação"}
+                  </Button>
+
+                  {sent === "success" && (
+                    <p className="text-sm text-green-600 text-center">
+                      Mensagem enviada com sucesso! Em breve entraremos em
+                      contato.
+                    </p>
+                  )}
+                  {sent === "error" && (
+                    <p className="text-sm text-red-600 text-center">
+                      Não foi possível enviar. Tente novamente em instantes.
+                    </p>
+                  )}
+                </form>
               </CardContent>
             </Card>
 
