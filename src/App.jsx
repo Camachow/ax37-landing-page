@@ -32,8 +32,16 @@ import {
   ChevronRight,
   ChevronDown,
 } from "lucide-react";
+import {
+  SiInstagram,
+  SiFacebook,
+  SiLinkedin,
+  SiYoutube,
+  SiX,
+  SiWhatsapp,
+} from "react-icons/si";
 import heroImage from "./assets/hero-exposition.jpg";
-import ax37Logo from "./assets/ax37-logo.png";
+import ax37Logo from "./assets/ax37-sem-fundo.png";
 import "./App.css";
 import ThemeToggle from "./components/ui/theme-toggle";
 import { productCatalog } from "./data/productCatalog";
@@ -41,10 +49,72 @@ import standCorporativo from "./assets/stand-corporativo.jpg";
 import feiraTecnologica from "./assets/feira-tecnologica.jpg";
 import exposicaoCultural from "./assets/exposicao-cultural.jpg";
 
+const SOCIALS = {
+  instagram: "https://instagram.com/ax37marketing",
+  // facebook: "https://facebook.com/ax37marketing",
+  linkedin: "https://www.linkedin.com/company/ax37marketing",
+  // youtube: "https://www.youtube.com/@ax37marketing",
+  // twitter: "https://x.com/ax37marketing",
+  whatsapp:
+    "https://wa.me/5531999999999?text=Ol%C3%A1%20AX37!%20Quero%20um%20or%C3%A7amento",
+};
+
+function SocialLinks({ size = "md", className = "", useBrandColor = false }) {
+  const btnSize = { sm: "h-9 w-9", md: "h-10 w-10", lg: "h-12 w-12" }[size];
+  const iconPx = { sm: 16, md: 20, lg: 24 }[size];
+
+  const entries = [
+    {
+      key: "instagram",
+      Icon: SiInstagram,
+      label: "Instagram",
+      brand: "#E4405F",
+    },
+    { key: "facebook", Icon: SiFacebook, label: "Facebook", brand: "#1877F2" },
+    { key: "linkedin", Icon: SiLinkedin, label: "LinkedIn", brand: "#0A66C2" },
+    { key: "youtube", Icon: SiYoutube, label: "YouTube", brand: "#FF0000" },
+    { key: "twitter", Icon: SiX, label: "X (Twitter)", brand: "#000000" },
+    { key: "whatsapp", Icon: SiWhatsapp, label: "WhatsApp", brand: "#25D366" },
+  ];
+
+  return (
+    <div className={`flex items-center gap-2 ${className}`}>
+      {entries.map(({ key, Icon, label, brand }) => {
+        const href = SOCIALS[key];
+        if (!href) return null;
+        return (
+          <a
+            key={key}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={label}
+            title={label}
+            className={`group grid place-items-center rounded-full border border-accent/30
+                        bg-accent/10 hover:bg-accent/20 transition ${btnSize}`}
+            style={!useBrandColor ? undefined : { color: brand }}
+          >
+            {/* Por padrão herda o color via Tailwind (text-accent); 
+               se useBrandColor=true, usa a cor oficial da marca */}
+            <Icon
+              size={iconPx}
+              className={useBrandColor ? "" : "text-accent"}
+            />
+            <span className="sr-only">{label}</span>
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
 function EventCard({ image, badge, title, description, alt }) {
   return (
-    <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
-      <div className="aspect-video relative overflow-hidden">
+    <Card
+      className="group relative rounded-2xl shadow-lg hover:shadow-2xl
+                 transition-all duration-300 hover:-translate-y-0.5 hover:z-10 transform-gpu"
+    >
+      <div className="aspect-video relative overflow-hidden rounded-t-2xl">
         <img
           src={image}
           alt={alt}
@@ -162,35 +232,6 @@ const events = [
   },
 ];
 
-function ServiceCard({ Icon, title, description, bullets }) {
-  return (
-    <Card className="group hover:shadow-xl transition-all duration-300 border-border hover:border-accent/50">
-      <CardHeader className="text-center pb-4">
-        <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent/20 transition-colors border border-accent/20">
-          <Icon className="w-8 h-8 text-accent" />
-        </div>
-        <CardTitle className="text-xl text-foreground">{title}</CardTitle>
-      </CardHeader>
-      <CardContent className="text-center">
-        <CardDescription className="text-base text-muted-foreground">
-          {description}
-        </CardDescription>
-        <div className="mt-4 space-y-2">
-          {bullets?.map((b, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-center text-sm text-muted-foreground"
-            >
-              <CheckCircle className="w-4 h-4 mr-2 text-accent" />
-              {b}
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
 function SimpleItemCard({
   image,
   alt,
@@ -201,15 +242,17 @@ function SimpleItemCard({
   bullets,
   details,
 }) {
+  const hasImage = Boolean(image);
+
   return (
     <Card
-      className="group overflow-hidden border border-border/60 rounded-2xl
-                 shadow-sm hover:shadow-xl hover:border-accent/50
-                 transition-all duration-300 hover:-translate-y-0.5 bg-card"
+      className="group relative border border-border/60 rounded-2xl
+             shadow-sm hover:shadow-xl hover:border-accent/50
+             transition-all duration-300 hover:-translate-y-0.5 hover:z-10 transform-gpu bg-card"
     >
-      {/* Media */}
-      <div className="relative aspect-video">
-        {image && (
+      {/* Renderiza mídia SOMENTE quando houver imagem */}
+      {hasImage && (
+        <div className="relative aspect-video overflow-hidden rounded-t-2xl">
           <img
             src={image}
             alt={alt || title}
@@ -217,30 +260,37 @@ function SimpleItemCard({
             decoding="async"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
-        )}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent opacity-90" />
+          {badge && (
+            <div className="absolute left-4 bottom-4">
+              <Badge className="bg-white/90 text-gray-800 shadow-sm">
+                {badge}
+              </Badge>
+            </div>
+          )}
+        </div>
+      )}
 
-        {/* gradient overlay suave */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-black/10 to-transparent opacity-90" />
-
-        {/* badge */}
-        {badge && (
-          <div className="absolute left-4 bottom-4">
-            <Badge className="bg-white/90 text-gray-800 shadow-sm">
-              {badge}
-            </Badge>
-          </div>
-        )}
-      </div>
-
-      {/* Body */}
-      <CardContent className="p-6">
-        {/* Ícone opcional como avatar */}
+      <CardContent className={`p-6 ${hasImage ? "" : "pt-6"}`}>
+        {/* Ícone (sem imagem: fica no topo; com imagem: sobrepõe levemente) */}
         {Icon ? (
           <div
-            className="w-12 h-12 -mt-10 mb-3 rounded-full bg-background/90 backdrop-blur
-                          border border-border/70 shadow-sm flex items-center justify-center"
+            className={`w-12 h-12 ${
+              hasImage ? "-mt-10 mb-3" : "mb-3"
+            } rounded-full
+                        bg-background/90 backdrop-blur border border-border/70 shadow-sm
+                        flex items-center justify-center`}
           >
             <Icon className="w-6 h-6 text-accent" />
+          </div>
+        ) : null}
+
+        {/* Badge opcional quando NÃO há imagem */}
+        {!hasImage && badge ? (
+          <div className="mb-2">
+            <Badge className="bg-accent/10 text-accent border border-accent/20">
+              {badge}
+            </Badge>
           </div>
         ) : null}
 
@@ -250,12 +300,11 @@ function SimpleItemCard({
           <p className="mt-1 text-sm text-muted-foreground">{caption}</p>
         )}
 
-        {/* separador sutil se houver conteúdo extra */}
         {(bullets?.length || details) && (
           <div className="mt-4 mb-3 h-px bg-border/60" />
         )}
 
-        {/* Bullets responsivos em 2 colunas no md+ */}
+        {/* Bullets */}
         {bullets?.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {bullets.map((b, i) => (
@@ -270,7 +319,7 @@ function SimpleItemCard({
           </div>
         ) : null}
 
-        {/* “Saiba mais” com chevron animado */}
+        {/* “Saiba mais” */}
         {details ? (
           <details className="group/acc mt-4 rounded-lg border border-border bg-muted/40">
             <summary
@@ -444,88 +493,6 @@ const serviceTypes = [
   },
 ];
 
-// const productCatalog = [
-//   {
-//     Icon: Building2,
-//     title: "Portal & Fachada de Acesso",
-//     caption: "Entrada principal harmonizada que destaca a marca.",
-//     details: `Refere-se à entrada principal. Torna a chegada harmônica visualmente, informando e destacando a entrada e a marca.`,
-//   },
-//   {
-//     Icon: Building2,
-//     title: "Estandes",
-//     caption: "Espaço de exposição para produtos e serviços.",
-//     details: `Espaço reservado em feiras/exposições para apresentar produtos e serviços ao público.`,
-//   },
-//   {
-//     Icon: Building2,
-//     title: "Quiosques",
-//     caption: "Ponto compacto em locais de fluxo para divulgação e venda.",
-//     details: `Espaço físico instalado em locais de circulação para divulgar e vender produtos e serviços.`,
-//   },
-//   {
-//     Icon: Wrench,
-//     title: "Deck para Parklet",
-//     caption: "Plataforma que transforma vaga em área de convivência.",
-//     details: `Plataforma instalada em área antes destinada a estacionamento para criar espaço de lazer e convívio.`,
-//   },
-//   {
-//     Icon: MapPin,
-//     title: "Meeting Point (Ponto de Encontro)",
-//     caption: "Área integrada ao mall para encontros e ativações.",
-//     details: `Integra paisagismo, design e arquitetura ao ambiente de compras, indicando tendências de consumo. Local para encontros no mall, credenciamentos, retirada de kits, serviços de customização e ativações.`,
-//   },
-//   {
-//     Icon: Camera,
-//     title: "Cenários Instagramáveis",
-//     caption: "Cenários fotogênicos que incentivam compartilhamento.",
-//     details: `Áreas projetadas e decoradas para fotos e divulgação nas redes sociais.`,
-//   },
-//   {
-//     Icon: Package,
-//     title: "Contêineres Customizados",
-//     caption: "Estruturas modulares personalizadas, rápidas e sustentáveis.",
-//     details: `Estruturas desenvolvidas sob medida para lojas, escritórios, lanchonetes, sorveterias, estandes etc. Vantagens: rapidez de instalação, economia de tempo/dinheiro, sustentabilidade, durabilidade e adaptação a diferentes terrenos e climas.`,
-//   },
-//   {
-//     Icon: Camera,
-//     title: "Outdoor",
-//     caption: "Mídia externa de grande formato e alto alcance.",
-//     details: `Publicidade externa impressa ou digital em grande escala para promover marcas, produtos ou serviços. De leitura rápida e fixação objetiva, atinge o público em massa no ambiente urbano.`,
-//   },
-//   {
-//     Icon: Package,
-//     title: "Totem de Mídia",
-//     caption: "Peça vertical informativa ou publicitária (digital/estático).",
-//     details: `Peça de comunicação visual para chamar atenção no PDV. Pode ser informativa ou publicitária. Tipos: digitais (vídeos, animações e interatividade) e estáticos (exibição permanente/semi-permanente).`,
-//   },
-//   {
-//     Icon: Package,
-//     title: "PDV & Expositores",
-//     caption: "Ambiente de compra com expositores que influenciam decisão.",
-//     details: `PDV é onde o cliente paga as compras (loja física, e-commerce, marketplace ou rede social). Deve ser organizado, limpo, bem iluminado e confortável. Estratégias no PDV consideram o comportamento do consumidor para aumentar conversões.
-// Expositores organizam e destacam produtos em museus, lojas, feiras e eventos, contribuindo para divulgação e vendas. Há expositores de segurança/visibilidade para itens de alto valor. Pesquisas indicam que grande parte das decisões de compra acontece diante dos expositores.`,
-//   },
-//   {
-//     Icon: Wrench,
-//     title: "Mobiliário para Eventos",
-//     caption: "Conforto e funcionalidade para o seu espaço.",
-//     details: `Equipamos seu evento com mobiliário especializado para garantir conforto e funcionalidade.`,
-//   },
-//   {
-//     Icon: Package,
-//     title: "Materiais Promocionais",
-//     caption: "Banners, flyers e brindes personalizados.",
-//     details: `Destaque sua marca com materiais promocionais de alta qualidade, como banners, flyers e brindes.`,
-//   },
-//   {
-//     Icon: Settings,
-//     title: "Soluções Completas para Eventos",
-//     caption: "Infra completa e gestão de equipes de apoio.",
-//     details: `Gama completa de soluções: montagem de tendas, palcos e banheiros, além da gestão de equipes de apoio como buffet, segurança, limpeza etc.`,
-//   },
-// ];
-
 function chunkArray(arr, size) {
   const chunks = [];
   for (let i = 0; i < arr.length; i += size)
@@ -555,7 +522,7 @@ function GridCarousel({ items, renderItem }) {
       {/* wrapper relativo da faixa de cards */}
       <div className="relative">
         {/* viewport: esconda só no eixo X; deixe Y visível p/ sombra não cortar */}
-        <div className="overflow-x-hidden overflow-y-visible -mx-2 sm:-mx-4">
+        <div className="overflow-x-hidden overflow-y-visible -mx-2 sm:-mx-4 py-3">
           <div
             className="flex transition-transform duration-500 ease-out"
             style={{ transform: `translateX(-${index * 100}%)` }}
@@ -641,16 +608,10 @@ function App() {
               Início
             </a>
             <a
-              href="#servicos"
+              href="#eventos"
               className="text-foreground hover:text-accent font-medium"
             >
-              Serviços
-            </a>
-            <a
-              href="#tipos"
-              className="text-foreground hover:text-accent font-medium"
-            >
-              Tipos de Eventos
+              Eventos
             </a>
             <a
               href="#produtos"
@@ -673,7 +634,8 @@ function App() {
             </a>
           </nav>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-3">
+            <SocialLinks size="sm" className="hidden md:flex" />
             <Button className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold">
               Solicitar Orçamento
             </Button>
@@ -709,13 +671,13 @@ function App() {
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button
+                {/* <Button
                   size="lg"
                   className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
                 >
                   <Calendar className="w-5 h-5 mr-2" />
                   Agendar Consulta
-                </Button>
+                </Button> */}
                 <Button
                   size="lg"
                   variant="outline"
@@ -791,12 +753,12 @@ function App() {
         </div>
       </section> */}
 
-      {/* Tipos de Eventos (serviços) */}
-      <section id="tipos" className="py-16 bg-muted/30">
+      {/* Tipos de Eventos*/}
+      <section id="eventos" className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center space-y-4 mb-16">
             <Badge className="bg-accent/10 text-accent border-accent/20">
-              Tipos de Eventos
+              Eventos
             </Badge>
             <h2 className="text-4xl font-bold text-foreground">
               Do Planejamento à Execução
@@ -940,7 +902,7 @@ function App() {
             renderItem={(ev) => <EventCard {...ev} />}
           />
 
-          <div className="text-center mt-12">
+          {/* <div className="text-center mt-12">
             <Button
               size="lg"
               variant="outline"
@@ -949,7 +911,7 @@ function App() {
               <Camera className="w-5 h-5 mr-2" />
               Ver Portfólio Completo
             </Button>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -1133,12 +1095,13 @@ function App() {
               <img
                 src={ax37Logo}
                 alt="AX37 Marketing Eventos"
-                className="h-16 w-auto filter brightness-0 invert"
+                className="h-12 w-auto"
               />
               <p className="text-primary-foreground/80">
                 Especialistas em marketing de eventos, criando experiências que
                 conectam marcas ao seu público-alvo.
               </p>
+              <SocialLinks size="md" useBrandColor />
             </div>
 
             <div>
@@ -1210,6 +1173,18 @@ function App() {
           </div>
         </div>
       </footer>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "AX37 Marketing Eventos",
+            url: "https://www.ax37marketing.com",
+            sameAs: Object.values(SOCIALS).filter(Boolean),
+          }),
+        }}
+      />
     </div>
   );
 }
