@@ -132,3 +132,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Rolagem suave global */
+html { scroll-behavior: smooth; }
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Altura do header fixo (ajuste se mudar o header) */
+:root { --header-h: 5rem; } /* ~80px */
+
+/* Garante que QUALQUER seção com id ancorável não fique escondida sob o header */
+[id] { scroll-margin-top: var(--header-h); }

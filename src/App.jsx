@@ -50,13 +50,33 @@ import feiraTecnologica from "./assets/feira-tecnologica.jpg";
 import exposicaoCultural from "./assets/exposicao-cultural.jpg";
 
 const SOCIALS = {
-  instagram: "https://instagram.com/ax37marketing",
+  instagram: "https://instagram.com/ax37marketingeventos",
   // facebook: "https://facebook.com/ax37marketing",
-  linkedin: "https://www.linkedin.com/company/ax37marketing",
+  // linkedin: "https://www.linkedin.com/company/ax37marketing",
   // youtube: "https://www.youtube.com/@ax37marketing",
   // twitter: "https://x.com/ax37marketing",
   whatsapp: "https://wa.me/5531993690883",
 };
+
+function HeaderLink({ href, children, label }) {
+  return (
+    <a
+      href={href}
+      className="relative inline-flex items-center font-medium text-foreground/90 hover:text-accent
+                 transition-colors duration-300 motion-reduce:transition-none group"
+      aria-label={label || `Ir para ${children}`}
+    >
+      <span className="px-1">{children}</span>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-2 -bottom-1 h-[2px]
+                   bg-gradient-to-r from-transparent via-accent/80 to-transparent
+                   scale-x-0 group-hover:scale-x-100 origin-center
+                   transition-transform duration-300 motion-reduce:transition-none"
+      />
+    </a>
+  );
+}
 
 function SocialLinks({ size = "md", className = "", useBrandColor = false }) {
   const btnSize = { sm: "h-9 w-9", md: "h-10 w-10", lg: "h-12 w-12" }[size];
@@ -90,7 +110,7 @@ function SocialLinks({ size = "md", className = "", useBrandColor = false }) {
             aria-label={label}
             title={label}
             className={`group grid place-items-center rounded-full border border-accent/30
-                        bg-accent/10 hover:bg-accent/20 transition ${btnSize}`}
+                        bg-accent/10 hover:bg-accent/20 transition ${btnSize} transition-transform duration-300 hover:-translate-y-0.5 motion-reduce:transition-none`}
             style={!useBrandColor ? undefined : { color: brand }}
           >
             {/* Por padrão herda o color via Tailwind (text-accent); 
@@ -712,37 +732,11 @@ function App() {
             />
           </div>
           <nav className="hidden md:flex space-x-8">
-            <a
-              href="#inicio"
-              className="text-foreground hover:text-accent font-medium"
-            >
-              Início
-            </a>
-            <a
-              href="#eventos"
-              className="text-foreground hover:text-accent font-medium"
-            >
-              Eventos
-            </a>
-            <a
-              href="#produtos"
-              className="text-foreground hover:text-accent font-medium"
-            >
-              Produtos
-            </a>
-            <a
-              href="#portfolio"
-              className="text-foreground hover:text-accent font-medium"
-            >
-              Portfólio
-            </a>
-            {/* <a href="#depoimentos" ...>Depoimentos</a> */}
-            <a
-              href="#contato"
-              className="text-foreground hover:text-accent font-medium"
-            >
-              Contato
-            </a>
+            <HeaderLink href="#inicio">Início</HeaderLink>
+            <HeaderLink href="#eventos">Eventos</HeaderLink>
+            <HeaderLink href="#produtos">Produtos</HeaderLink>
+            {/* <HeaderLink href="#portfolio">Portfólio</HeaderLink> */}
+            <HeaderLink href="#contato">Contato</HeaderLink>
           </nav>
 
           <div className="flex items-center gap-3">
