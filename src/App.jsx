@@ -1307,8 +1307,7 @@ function App() {
       {/* Footer */}
       <footer className="bg-primary text-primary-foreground py-12">
         <div className="container mx-auto px-4">
-          {/* aumentei para 5 colunas no md+ */}
-          <div className="grid md:grid-cols-5 gap-8">
+          <div className="grid md:grid-cols-4 gap-8">
             {/* Sobre + redes */}
             <div className="space-y-4">
               <img
@@ -1389,54 +1388,28 @@ function App() {
               </ul>
             </div>
 
-            {/* NOVO: Fornecedores */}
+            {/* Parcerias & Carreiras (Fornecedor + Trabalhe Conosco) */}
             <div>
-              <h4 className="font-semibold text-lg mb-4">Fornecedores</h4>
+              <h4 className="font-semibold text-lg mb-4">
+                Parcerias &amp; Carreiras
+              </h4>
               <ul className="space-y-2 text-primary-foreground/80">
                 <li>
                   <a
-                    href="mailto:fornecedores@ax37marketing.com?subject=Parceria%20-%20Cadastro%20de%20Fornecedor&body=Olá%20AX37%2C%0A%0ARef.%3A%20Cadastro%20de%20Fornecedor.%20Segue%20resumo%20dos%20nossos%20serviços%20e%20portfólio%3A%0A-%20Empresa%3A%0A-%20CNPJ%3A%0A-%20Cidade%2FUF%3A%0A-%20Categoria%20(%20ex.%3A%20cenografia%2C%20áudio%2C%20lighting%20)%3A%0A-%20Site%2FPortfólio%3A%0A-%20Telefone%3A%0A%0AObrigado!"
+                    href="mailto:ax37marketingeventos@gmail.com?subject=Parceria%20ou%20Trabalhe%20Conosco&body=Olá%20AX37%2C%0A%0AEstou%20entrando%20em%20contato%20referente%20a%20%5BFornecedor%20ou%20Trabalhe%20Conosco%5D.%0A%0A-%20Nome%3A%0A-%20Empresa/CV%3A%0A-%20Telefone%3A%0A%0AObrigado!"
                     className="hover:text-accent transition-colors"
                   >
-                    fornecedores@ax37marketing.com
+                    ax37marketingeventos@gmail.com
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://wa.me/5531993690883?text=Olá%20AX37!%20Sou%20fornecedor%20e%20gostaria%20de%20parceria."
+                    href="https://wa.me/5531993690883?text=Olá%20AX37!%20Gostaria%20de%20falar%20sobre%20parceria%20ou%20trabalhar%20com%20vocês."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center mt-2 rounded-md border border-primary-foreground/30 bg-primary/20 px-3 py-2 text-sm hover:bg-primary/30 transition-colors"
-                    aria-label="Abrir WhatsApp para fornecedores"
-                    title="Seja parceiro (WhatsApp)"
                   >
-                    Seja parceiro via WhatsApp
-                  </a>
-                </li>
-                {/* opcional: link para uma página com requisitos */}
-                {/* <li><a href="/fornecedores" className="hover:text-accent transition-colors">Guia de homologação</a></li> */}
-              </ul>
-            </div>
-
-            {/* NOVO: Trabalhe Conosco */}
-            <div>
-              <h4 className="font-semibold text-lg mb-4">Trabalhe Conosco</h4>
-              <ul className="space-y-2 text-primary-foreground/80">
-                <li>
-                  <a
-                    href="mailto:recrutamento@ax37marketing.com?subject=Trabalhe%20Conosco%20-%20%5BSeu%20Nome%5D&body=Olá%20AX37%2C%0A%0ASegue%20meu%20currículo%20em%20anexo.%0A-%20Nome%3A%0A-%20Cidade%2FUF%3A%0A-%20Área%20de%20interesse%3A%0A-%20LinkedIn%2FPortfólio%3A%0A%0AObrigado!"
-                    className="hover:text-accent transition-colors"
-                  >
-                    recrutamento@ax37marketing.com
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/vagas"
-                    className="inline-flex items-center mt-2 rounded-md border border-primary-foreground/30 bg-primary/20 px-3 py-2 text-sm hover:bg-primary/30 transition-colors"
-                    title="Ver vagas abertas"
-                  >
-                    Ver vagas & enviar CV
+                    WhatsApp Direto
                   </a>
                 </li>
               </ul>
@@ -1450,6 +1423,7 @@ function App() {
           </div>
         </div>
       </footer>
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
