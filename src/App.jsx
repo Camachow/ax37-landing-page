@@ -55,8 +55,7 @@ const SOCIALS = {
   linkedin: "https://www.linkedin.com/company/ax37marketing",
   // youtube: "https://www.youtube.com/@ax37marketing",
   // twitter: "https://x.com/ax37marketing",
-  whatsapp:
-    "https://wa.me/5531999999999?text=Ol%C3%A1%20AX37!%20Quero%20um%20or%C3%A7amento",
+  whatsapp: "https://wa.me/5531993690883",
 };
 
 function SocialLinks({ size = "md", className = "", useBrandColor = false }) {
@@ -993,7 +992,7 @@ function App() {
       </section> */}
 
       {/* Portfolio Section */}
-      <section id="portfolio" className="py-16 bg-muted/30">
+      {/* <section id="portfolio" className="py-16 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center space-y-4 mb-16">
             <Badge className="bg-accent/10 text-accent border-accent/20">
@@ -1014,18 +1013,18 @@ function App() {
             renderItem={(ev) => <EventCard {...ev} compact />}
           />
 
-          {/* <div className="text-center mt-12">
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-accent text-accent hover:bg-accent hover:text-accent-foreground"
-            >
-              <Camera className="w-5 h-5 mr-2" />
-              Ver Portfólio Completo
-            </Button>
-          </div> */}
+          // <div className="text-center mt-12">
+          //   <Button
+          //     size="lg"
+          //     variant="outline"
+          //     className="border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+          //   >
+          //     <Camera className="w-5 h-5 mr-2" />
+          //     Ver Portfólio Completo
+          //   </Button>
+          // </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Contact Section */}
       <section id="contato" className="py-16 bg-muted/30">
@@ -1068,6 +1067,46 @@ function App() {
                 />
 
                 <form onSubmit={onSubmit} noValidate className="space-y-4">
+                  {/* AVISO TEMPORÁRIO - remover quando o form estiver ativo */}
+                  <div className="flex items-start gap-3 rounded-lg border border-yellow-300 bg-yellow-50 p-4">
+                    <div className="shrink-0">
+                      <svg
+                        className="h-5 w-5 text-yellow-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 9v2m0 4h.01M5.07 19h13.86c1.54 0 2.5-1.67 1.73-3L13.73 4c-.77-1.33-2.69-1.33-3.46 0L3.34 16c-.77 1.33.19 3 1.73 3z"
+                        />
+                      </svg>
+                    </div>
+                    <p className="text-sm text-yellow-800">
+                      Nosso formulário de contato está{" "}
+                      <strong>temporariamente fora do ar</strong>. Em breve
+                      estará disponível! Enquanto isso, entre em contato pelo{" "}
+                      <a
+                        href="mailto:contato@ax37marketing.com"
+                        className="underline font-medium text-yellow-900 hover:text-yellow-700"
+                      >
+                        e-mail
+                      </a>{" "}
+                      ou{" "}
+                      <a
+                        href="https://wa.me/5531993690883?text=Olá%20AX37!%20Quero%20um%20orçamento"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline font-medium text-yellow-900 hover:text-yellow-700"
+                      >
+                        WhatsApp
+                      </a>
+                      .
+                    </p>
+                  </div>
+                  {/* Fim do warning */}
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label
@@ -1203,7 +1242,6 @@ function App() {
                         Telefone
                       </h3>
                       <p className="text-muted-foreground">(31) 9369-0883</p>
-                      <p className="text-muted-foreground">(31) 9617-5573</p>
                     </div>
                   </div>
                 </CardContent>
@@ -1220,17 +1258,14 @@ function App() {
                         Email
                       </h3>
                       <p className="text-muted-foreground">
-                        contato@ax37marketing.com
-                      </p>
-                      <p className="text-muted-foreground">
-                        orcamento@ax37marketing.com
+                        ax37marketingeventos@gmail.com
                       </p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="border-border">
+              {/* <Card className="border-border">
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center border border-accent/20">
@@ -1249,7 +1284,7 @@ function App() {
                     </div>
                   </div>
                 </CardContent>
-              </Card>
+              </Card> */}
 
               <div className="bg-card rounded-lg p-6 border border-border">
                 <h3 className="font-semibold text-lg mb-4 text-foreground">
@@ -1278,7 +1313,9 @@ function App() {
       {/* Footer */}
       <footer className="bg-primary text-primary-foreground py-12">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
+          {/* aumentei para 5 colunas no md+ */}
+          <div className="grid md:grid-cols-5 gap-8">
+            {/* Sobre + redes */}
             <div className="space-y-4">
               <img
                 src={ax37Logo}
@@ -1292,6 +1329,7 @@ function App() {
               <SocialLinks size="md" useBrandColor />
             </div>
 
+            {/* Serviços */}
             <div>
               <h4 className="font-semibold text-lg mb-4">Serviços</h4>
               <ul className="space-y-2 text-primary-foreground/80">
@@ -1318,38 +1356,95 @@ function App() {
               </ul>
             </div>
 
+            {/* Empresa */}
             <div>
               <h4 className="font-semibold text-lg mb-4">Empresa</h4>
               <ul className="space-y-2 text-primary-foreground/80">
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <a
+                    href="#inicio"
+                    className="hover:text-accent transition-colors"
+                  >
                     Sobre Nós
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <a
+                    href="#portfolio"
+                    className="hover:text-accent transition-colors"
+                  >
                     Portfólio
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <a
+                    href="#eventos"
+                    className="hover:text-accent transition-colors"
+                  >
                     Depoimentos
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-accent transition-colors">
+                  <a
+                    href="#contato"
+                    className="hover:text-accent transition-colors"
+                  >
                     Contato
                   </a>
                 </li>
               </ul>
             </div>
 
+            {/* NOVO: Fornecedores */}
             <div>
-              <h4 className="font-semibold text-lg mb-4">Contato</h4>
+              <h4 className="font-semibold text-lg mb-4">Fornecedores</h4>
               <ul className="space-y-2 text-primary-foreground/80">
-                <li>(31) 9369-0883</li>
-                <li>contato@ax37marketing.com</li>
-                <li>Belo Horizonte - MG</li>
+                <li>
+                  <a
+                    href="mailto:fornecedores@ax37marketing.com?subject=Parceria%20-%20Cadastro%20de%20Fornecedor&body=Olá%20AX37%2C%0A%0ARef.%3A%20Cadastro%20de%20Fornecedor.%20Segue%20resumo%20dos%20nossos%20serviços%20e%20portfólio%3A%0A-%20Empresa%3A%0A-%20CNPJ%3A%0A-%20Cidade%2FUF%3A%0A-%20Categoria%20(%20ex.%3A%20cenografia%2C%20áudio%2C%20lighting%20)%3A%0A-%20Site%2FPortfólio%3A%0A-%20Telefone%3A%0A%0AObrigado!"
+                    className="hover:text-accent transition-colors"
+                  >
+                    fornecedores@ax37marketing.com
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://wa.me/5531993690883?text=Olá%20AX37!%20Sou%20fornecedor%20e%20gostaria%20de%20parceria."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center mt-2 rounded-md border border-primary-foreground/30 bg-primary/20 px-3 py-2 text-sm hover:bg-primary/30 transition-colors"
+                    aria-label="Abrir WhatsApp para fornecedores"
+                    title="Seja parceiro (WhatsApp)"
+                  >
+                    Seja parceiro via WhatsApp
+                  </a>
+                </li>
+                {/* opcional: link para uma página com requisitos */}
+                {/* <li><a href="/fornecedores" className="hover:text-accent transition-colors">Guia de homologação</a></li> */}
+              </ul>
+            </div>
+
+            {/* NOVO: Trabalhe Conosco */}
+            <div>
+              <h4 className="font-semibold text-lg mb-4">Trabalhe Conosco</h4>
+              <ul className="space-y-2 text-primary-foreground/80">
+                <li>
+                  <a
+                    href="mailto:recrutamento@ax37marketing.com?subject=Trabalhe%20Conosco%20-%20%5BSeu%20Nome%5D&body=Olá%20AX37%2C%0A%0ASegue%20meu%20currículo%20em%20anexo.%0A-%20Nome%3A%0A-%20Cidade%2FUF%3A%0A-%20Área%20de%20interesse%3A%0A-%20LinkedIn%2FPortfólio%3A%0A%0AObrigado!"
+                    className="hover:text-accent transition-colors"
+                  >
+                    recrutamento@ax37marketing.com
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/vagas"
+                    className="inline-flex items-center mt-2 rounded-md border border-primary-foreground/30 bg-primary/20 px-3 py-2 text-sm hover:bg-primary/30 transition-colors"
+                    title="Ver vagas abertas"
+                  >
+                    Ver vagas & enviar CV
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
